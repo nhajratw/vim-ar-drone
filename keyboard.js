@@ -3,6 +3,8 @@ var client = arDrone.createClient();
 
 var stdin = process.stdin;
 
+var COMMAND_DURATION = 500;
+
 // without this, we would only get streams once enter is pressed
 stdin.setRawMode( true );
 //
@@ -17,26 +19,40 @@ stdin.setEncoding( 'utf8' );
 stdin.on( 'data', function( key ){
   //process.stdout.write( key );
   // ctrl-c ( end of text )
-  if ( key === '\u0003' ) {
-    process.exit();
+  switch (key) { 
+    case '\u0003':
+          process.exit();
+          break;
+    case 'i':
+          client.takeoff();
+          break;
+    case 'x':
+          client.stop();
+          client.land();
+          break;
+    case 'k':
+          client.up(0.5);
+          client.after(COMMAND_DURATION, function() {
+            this.stop();
+          });
+          break;
+    case 'j':
+          client.down(0.5);
+          client.after(COMMAND_DURATION, function() {
+            this.stop();
+          });
+          break;
+    case 'h':
+          client.counterClockwise(0.5);
+          client.after(COMMAND_DURATION, function() {
+            this.stop();
+          });
+          break;
+    case 'l':
+          client.clockwise(0.5);
+          client.after(COMMAND_DURATION, function() {
+            this.stop();
+          });
+          break;
   }
-  if ( key === 'i' ) {
-    client.takeoff();
-  }
-  if ( key === 'x' ) {
-    client.stop();
-    client.land();
-  }
-  if (key === 'j') {
-    client.counterClockwise(0.5);
-    client.after(1000, function() {
-      this.stop();
-    });
-  } 
-  if (key === 'k') {
-    client.clockwise(0.5);
-    client.after(1000, function() {
-      this.stop();
-    });
-  } 
 });
