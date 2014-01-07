@@ -7,12 +7,10 @@ var COMMAND_DURATION = 500;
 
 // without this, we would only get streams once enter is pressed
 stdin.setRawMode( true );
-//
+
 // resume stdin in the parent process (node app won't quit all by itself
 // unless an error or process.exit() happens)
 stdin.resume();
-
-// i don't want binary, do you?
 stdin.setEncoding( 'utf8' );
 
 // on any data into stdin
@@ -45,6 +43,24 @@ stdin.on( 'data', function( key ){
     case 'l':
       client.clockwise(0.5);
       stop();
+      break;
+    case '?':
+      var animations = ['phiM30Deg', 'phi30Deg', 'thetaM30Deg', 'theta30Deg', 'theta20degYaw200deg',
+          'theta20degYawM200deg', 'turnaround', 'turnaroundGodown', 'yawShake',
+          'yawDance', 'phiDance', 'thetaDance', 'vzDance', 'wave', 'phiThetaMixed',
+          'doublePhiThetaMixed', 'flipAhead', 'flipBehind', 'flipLeft', 'flipRight'];
+      var animationIndex = Math.floor((Math.random() * animations.length) + 1); 
+      console.log("Starting Animation: " + animations[animationIndex]);
+      client.animate(animations[animationIndex], 1000);
+      break;
+    case '!':
+      client.animate('wave',1000);
+      client.after(2000, function() {
+        this.animate('yawDance', 1000);
+      }
+     // client.animate('doublePhiThetaMixed', 1000);
+     // client.animate('phiDance', 1000);
+     // client.animate('flipAhead', 1000);
       break;
   }
 });
