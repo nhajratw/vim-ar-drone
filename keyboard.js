@@ -57,7 +57,7 @@ stdin.on( 'data', function( key ){
       client.animate('wave',1000);
       client.after(2000, function() {
         this.animate('yawDance', 1000);
-      }
+      });
      // client.animate('doublePhiThetaMixed', 1000);
      // client.animate('phiDance', 1000);
      // client.animate('flipAhead', 1000);
