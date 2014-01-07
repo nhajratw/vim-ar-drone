@@ -21,38 +21,36 @@ stdin.on( 'data', function( key ){
   // ctrl-c ( end of text )
   switch (key) { 
     case '\u0003':
-          process.exit();
-          break;
+      process.exit();
+      break;
     case 'i':
-          client.takeoff();
-          break;
+      client.takeoff();
+      break;
     case 'x':
-          client.stop();
-          client.land();
-          break;
+      client.stop();
+      client.land();
+      break;
     case 'k':
-          client.up(0.5);
-          client.after(COMMAND_DURATION, function() {
-            this.stop();
-          });
-          break;
+      client.up(0.5);
+      stop();
+      break;
     case 'j':
-          client.down(0.5);
-          client.after(COMMAND_DURATION, function() {
-            this.stop();
-          });
-          break;
+      client.down(0.5);
+      stop();
+      break;
     case 'h':
-          client.counterClockwise(0.5);
-          client.after(COMMAND_DURATION, function() {
-            this.stop();
-          });
-          break;
+      client.counterClockwise(0.5);
+      stop();
+      break;
     case 'l':
-          client.clockwise(0.5);
-          client.after(COMMAND_DURATION, function() {
-            this.stop();
-          });
-          break;
+      client.clockwise(0.5);
+      stop();
+      break;
   }
 });
+
+function stop() {
+  client.after(COMMAND_DURATION, function() {
+    this.stop();
+  });
+}
